@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import MainPage from './MainPage';
 import SearchPage from './SearchPage';
@@ -30,22 +31,24 @@ class BooksApp extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        <Route 
-       	  exact 
-          path="/" 
-          render={() => ( 
-    		<MainPage onSelectShelf={this.onSelectShelf} books={this.state.books} />
-		  )} 
-		/>
-		<Route 
-       	  exact 
-          path="/search" 
-          render={() => ( 
-    		<SearchPage books={this.state.books} onSelectShelf={this.onSelectShelf} />
-		  )} 
-		/>
-      </div>
+      <BrowserRouter>
+        <div className="app">
+          <Route 
+            exact 
+            path="/" 
+            render={() => ( 
+              <MainPage onSelectShelf={this.onSelectShelf} books={this.state.books} />
+            )} 
+          />
+          <Route 
+            exact 
+            path="/search" 
+            render={() => ( 
+              <SearchPage books={this.state.books} onSelectShelf={this.onSelectShelf} />
+            )} 
+          />
+        </div>
+	  </BrowserRouter>
     )
   }
 }
