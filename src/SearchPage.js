@@ -4,7 +4,7 @@ import Book from './Books/Book';
 
 class SearchPage extends Component {
   state = {
-	query: '',  
+	query: '',
     matchingBooks: [],
   }
 

@@ -7,22 +7,21 @@ class Book extends Component {
       <li key={book.id}>
 	    <div className="book">
 		  <div className="book-top">
-            <div 
-      		  className="book-cover" 
+            <div
+      		  className="book-cover"
       		  style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}
 			>
 		    </div>
             <div className="book-shelf-changer">
-			  <select 
+			  <select
 				value={book.shelf}
 				onChange={(e) => {
-				  console.log(`[select] book: ${book}, e.target.value: ${e.target.value}`)
 				  e.preventDefault();
 				  onSelectShelf(book, e.target.value);
 				}}
 			  >
 			    <option value="move" disabled>Move to...</option>
-			    <option 
+			    <option
 				  value="currentlyReading"
 				>
 			  	  Currently Reading
@@ -53,12 +52,3 @@ class Book extends Component {
 }
 
 export default Book;
-
-/*
-Book:
-  * id
-  * shelf
-  * title
-  * author
-  * imageLinks.thumbnail
-*/

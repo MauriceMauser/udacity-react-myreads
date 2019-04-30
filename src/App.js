@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import MainPage from './MainPage';
 import SearchPage from './SearchPage';
-import { Route } from 'react-router-dom';
 import './App.css';
 
 class BooksApp extends React.Component {
@@ -12,19 +11,17 @@ class BooksApp extends React.Component {
   }
 
   onSelectShelf = async (book, shelf) => {
-    console.log(`[onSelectShelf] book: ${book}, shelf: ${shelf}`)
     BooksAPI.update(book, shelf)
       .then(() => BooksAPI.getAll())
-      .then(books => { 
+      .then(books => {
         console.log("updated books: ", books);
         this.setState({ books })
       });
   }
-	
+
   componentDidMount() {
   	BooksAPI.getAll()
-	  .then(books => { 
-        console.log("[APP] Books: ", books);
+      .then(books => {
         this.setState({ books })
       })
   }
@@ -33,19 +30,19 @@ class BooksApp extends React.Component {
     return (
       <BrowserRouter>
         <div className="app">
-          <Route 
-            exact 
-            path="/" 
-            render={() => ( 
+          <Route
+            exact
+            path="/"
+            render={() => (
               <MainPage onSelectShelf={this.onSelectShelf} books={this.state.books} />
-            )} 
+            )}
           />
-          <Route 
-            exact 
-            path="/search" 
-            render={() => ( 
+          <Route
+            exact
+            path="/search"
+            render={() => (
               <SearchPage books={this.state.books} onSelectShelf={this.onSelectShelf} />
-            )} 
+            )}
           />
         </div>
 	  </BrowserRouter>
