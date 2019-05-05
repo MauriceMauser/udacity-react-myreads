@@ -1,26 +1,35 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import debounce from 'lodash/debounce';
+import * as BooksAPI from './BooksAPI';
 import Book from './Books/Book';
 
 class SearchPage extends Component {
-  state = {
-	query: '',
-    matchingBooks: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: '',
+      matchingBooks: [],
+    };
+    this.debouncedAutocompleteSearch = debounce(this.autocompleteSearch, 300);
+  }
+  
+  autocompleteSearch = (query) => {
+    BooksAPI.search(query, 18)
+      .then(books => this.setState({ matchingBooks: books || [] }));
   }
 
   handleQueryInput = (e) => {
-	e.preventDefault();
-    const { books } = this.props;
-    const query = e.target.value;
-    const matchingBooks = query.length ? books.filter(book => book.title.toLowerCase().includes(query.toLowerCase())) : [];
     this.setState({ 
-      matchingBooks,
-      query,
+      query: e.target.value,
+    }, () => {
+      this.debouncedAutocompleteSearch(this.state.query);
     });
   }
 
   render() {
-    const { matchingBooks } = this.state;
+    const { query, matchingBooks } = this.state;
+	console.log('matchingBooks: ', matchingBooks);
     return (
       <div className="search-books">
       
@@ -38,7 +47,7 @@ class SearchPage extends Component {
 			<input
 			  type="text" 
 			  placeholder="Search by title or author"
-			  value={this.state.query}
+			  value={query}
 			  onChange={this.handleQueryInput}
 			/>
 		</div>
@@ -46,7 +55,15 @@ class SearchPage extends Component {
 
  	<div className="search-books-results">
 	  <ol className="books-grid">
-	    {matchingBooks.map(book => <Book book={book} onSelectShelf={this.props.onSelectShelf} />)}
+	    {
+          query && matchingBooks.length ? matchingBooks
+          							.filter(book => book.imageLinks && book.imageLinks.thumbnail)
+									.map(book => <Book 
+          											key={book.id}
+          											book={book} 
+													onSelectShelf={this.props.onSelectShelf} 
+												 />) : ''
+		}
 	  </ol>
 	</div>
 

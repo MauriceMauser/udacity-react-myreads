@@ -14,7 +14,7 @@ class Book extends Component {
 		    </div>
             <div className="book-shelf-changer">
 			  <select
-				value={book.shelf}
+				value={book.shelf || 'none'}
 				onChange={(e) => {
 				  e.preventDefault();
 				  onSelectShelf(book, e.target.value);
@@ -45,7 +45,7 @@ class Book extends Component {
             </div>
           </div>
 		  <div className="book-title">{book.title}</div>
-	 	  <div className="book-authors">{book.authors.join(', ')}</div>
+	 	  <div className="book-authors">{book.authors && book.authors.join(', ')}</div>
       </div>
   	</li>);
   }
