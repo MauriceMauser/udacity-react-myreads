@@ -29,7 +29,6 @@ class SearchPage extends Component {
 
   render() {
     const { query, matchingBooks } = this.state;
-	console.log('matchingBooks: ', matchingBooks);
     return (
       <div className="search-books">
       
@@ -60,7 +59,11 @@ class SearchPage extends Component {
           							.filter(book => book.imageLinks && book.imageLinks.thumbnail)
 									.map(book => <Book 
           											key={book.id}
-          											book={book} 
+          											book={book}
+													shelf={
+                                                      this.props.books.filter(b => b.id === book.id).length > 0 ? 		
+													  	this.props.books.filter(b => b.id === book.id)[0].shelf : 'none'
+													}
 													onSelectShelf={this.props.onSelectShelf} 
 												 />) : ''
 		}

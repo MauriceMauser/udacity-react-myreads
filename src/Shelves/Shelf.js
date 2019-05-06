@@ -6,7 +6,14 @@ const Shelf = ({ shelf, books = [], onSelectShelf }) => (
     <h2 className="bookshelf-title">{shelf}</h2>
     <div className="bookshelf-books">
       <ol className="books-grid">
-        {books.map(book => <Book key={book.id} book={book} onSelectShelf={onSelectShelf} />)}
+        {
+          books.map(book => <Book 
+         						key={book.id} 
+								book={book} 
+								onSelectShelf={onSelectShelf} 
+								shelf={book.shelf}
+						 	/>)
+		}
       </ol>
     </div>
   </div>

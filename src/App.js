@@ -12,9 +12,13 @@ class BooksApp extends React.Component {
 
   onSelectShelf = async (book, shelf) => {
     book.shelf = shelf;
-    this.setState(currentState => ({ 
-      books: currentState.books.filter(b => b.id !== book.id).push(book),
-    }), () => BooksAPI.update(book, shelf));
+    this.setState(currentState => {
+      let books = currentState.books;
+      let index = books.findIndex(b => b.id === book.id);
+      let deleteCount = index === -1 ? 0 : 1;
+      books.splice(index, deleteCount, book);
+      return { books };
+    }, () => BooksAPI.update(book, shelf));
   }
 
   componentDidMount() {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Book extends Component {
   render() {
-    const { book, onSelectShelf } = this.props;
+    const { book, onSelectShelf, shelf = "none" } = this.props;
     return (
       <li key={book.id}>
 	    <div className="book">
@@ -14,7 +14,7 @@ class Book extends Component {
 		    </div>
             <div className="book-shelf-changer">
 			  <select
-				value={book.shelf || 'none'}
+				value={shelf}
 				onChange={(e) => {
 				  e.preventDefault();
 				  onSelectShelf(book, e.target.value);
