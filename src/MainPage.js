@@ -19,12 +19,12 @@ class MainPage extends Component {
       <div className="list-books-content">
       <div>
         {
-      	  shelves.map(shelf => <Shelf 
+      	  shelves.map(shelf => (<Shelf 
       	    						shelf={shelf.title}
   									books={books.filter(book => book.shelf === shelf.key)}
   									onSelectShelf={onSelectShelf}
-      	    					/>
-    	  );
+      	    					/>)
+    	  )
   		}
  	  </div>
     </div>
